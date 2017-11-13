@@ -1,0 +1,1 @@
+1) Usar o js filter() no bookshelf inves de map e comparar com a propriedade shelf do array books
