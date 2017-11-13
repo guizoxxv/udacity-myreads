@@ -1,0 +1,12 @@
+version: "3"
+services:
+  myreads-app:
+    container_name: myreads-app
+    image: node:9.0.0
+    volumes:
+      - ./react-app:/home/react/app
+    working_dir: /home/react/app
+    ports:
+      - 3003:3000
+    tty: true
+    command: npm start
