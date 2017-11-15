@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import Book from './Book'
 
 class Bookshelf extends Component {
-
   toCamelCase = (str) => {
     let string = str.split(' ').map((word, index) => {
       if(index === 0) { return word.toLowerCase(); }
@@ -26,9 +25,8 @@ class Bookshelf extends Component {
             {this.filterShelfBooks(this.toCamelCase(this.props.title), this.props.books).map((book) => (
               <li key={book.title}>
                 <Book
-                  title={book.title}
-                  author={book.authors.join(', ')}
-                  coverURL={book.imageLinks.thumbnail}
+                  book={book}
+                  onUpdateBookLocation={this.props.onUpdateBookLocation}
                 />
               </li>
             ))}

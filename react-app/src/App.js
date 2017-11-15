@@ -13,8 +13,17 @@ class BooksApp extends React.Component {
   componentDidMount() {
     BooksAPI.getAll().then((books) => {
       this.setState({ books: books })
-      console.log(this.state.books)
+      
+      // console.log(this.state.books)
+      // let targetIndex = this.state.books.findIndex((book) => book.title === 'React')
+      // console.log(targetIndex)
+      // books[targetIndex].title = 'Opa!'
+      // console.log(books)
     })
+  }
+
+  updateBookLocation = (book, shelf) => {
+    BooksAPI.update(book, shelf).then(this.componentDidMount())
   }
 
   render() {
@@ -53,9 +62,9 @@ class BooksApp extends React.Component {
             </div>
             <div className="list-books-content">
               <div>
-                <Bookshelf title="Want to Read" books={this.state.books} />
-                <Bookshelf title="Currently Reading" books={this.state.books} />
-                <Bookshelf title="Read" books={this.state.books} />
+                <Bookshelf title="Want to Read" books={this.state.books} onUpdateBookLocation={this.updateBookLocation} />
+                <Bookshelf title="Currently Reading" books={this.state.books} onUpdateBookLocation={this.updateBookLocation} />
+                <Bookshelf title="Read" books={this.state.books} onUpdateBookLocation={this.updateBookLocation} />
               </div>
             </div>
             <div className="open-search">
