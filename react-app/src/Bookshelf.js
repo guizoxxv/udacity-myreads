@@ -23,7 +23,7 @@ class Bookshelf extends Component {
         <div className="bookshelf-books">
           <ol className="books-grid">
             {this.filterShelfBooks(this.toCamelCase(this.props.title), this.props.books).map((book) => (
-              <li key={book.title}>
+              <li key={book.id}>
                 <Book
                   book={book}
                   onUpdateBookLocation={this.props.onUpdateBookLocation}

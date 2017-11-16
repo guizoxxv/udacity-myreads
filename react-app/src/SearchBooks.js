@@ -1,31 +1,33 @@
 import React from 'react'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
-import { Route } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import Book from './Book'
-import escapeRegExp from 'escape-string-regexp'
 
 class SearchBooks extends React.Component {
   state = {
     query: '',
+    books: []
   }
 
   updateQuery = (query) => {
-    this.setState({ query: query.trim() })
+    this.setState({ query: query })
+
+    if(query === '' || query === undefined) {
+      this.setState({ books: [] })
+    } else {
+      BooksAPI.search(query, 20).then((books) => {
+        if(books !== undefined) {
+          this.setState({ books: books })
+        }
+      })
+    }
   }
 
   render() {
-    let showingBooks
-    if(this.state.query) {
-      const match = new RegExp(escapeRegExp(this.state.query), 'i')
-      showingBooks = this.props.books.filter((book) => match.test(book.title))
-    } else {
-      showingBooks = this.props.books
-    }
-
     return (
       <div className="search-books">
+        {console.log(this.state.books)}
         <div className="search-books-bar">
           <Link
             className="close-search"
@@ -43,11 +45,14 @@ class SearchBooks extends React.Component {
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-            {showingBooks.map((book) => (
-              <li key={book.title}>
+            {this.state.books.length > 0 && this.state.books.map((book) => (
+              <li key={book.id}>
+                {console.log(this.props.myBooks.indexOf(book.id) > -1)}
+                {console.log(book.shelf)}
                 <Book
                   book={book}
                   onUpdateBookLocation={this.props.onUpdateBookLocation}
+                  selectedShelf={this.props.myBooks.indexOf(book.id) > -1 ? book.shelf : 'none'}
                 />
               </li>
             ))}
