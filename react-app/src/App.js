@@ -21,7 +21,7 @@ class BooksApp extends React.Component {
     BooksAPI.update(book, shelf).then(this.componentDidMount())
   }
 
-  getBooksIds = () => {
+  getMyBooksIds = () => {
     let booksIds = []
 
     Object.entries(this.state.books).forEach(([key, value]) => {
@@ -32,10 +32,12 @@ class BooksApp extends React.Component {
   }
 
   render() {
+    const bookshelf_array = ['Want to Read', 'Currently Reading', 'Read']
+
     return (
       <div className="app">
         <Route exact path='/search' render={() => (
-          <SearchBooks onUpdateBookLocation={this.updateBookLocation} myBooks={this.getBooksIds()} />
+          <SearchBooks onUpdateBookLocation={this.updateBookLocation} myBooks={this.state.books} myBooksIds={this.getMyBooksIds()} />
         )} />
 
         <Route exact path='/' render={() => (
@@ -45,9 +47,9 @@ class BooksApp extends React.Component {
             </div>
             <div className="list-books-content">
               <div>
-                <Bookshelf title="Want to Read" books={this.state.books} onUpdateBookLocation={this.updateBookLocation} />
-                <Bookshelf title="Currently Reading" books={this.state.books} onUpdateBookLocation={this.updateBookLocation} />
-                <Bookshelf title="Read" books={this.state.books} onUpdateBookLocation={this.updateBookLocation} />
+                {bookshelf_array.map((shelf) => (
+                  <Bookshelf key={shelf} title={shelf} books={this.state.books} onUpdateBookLocation={this.updateBookLocation} />
+                ))}
               </div>
             </div>
             <div className="open-search">

@@ -16,18 +16,31 @@ class SearchBooks extends React.Component {
     if(query === '' || query === undefined) {
       this.setState({ books: [] })
     } else {
-      BooksAPI.search(query, 20).then((books) => {
-        if(books !== undefined) {
-          this.setState({ books: books })
+      BooksAPI.search(query, 20).then((searchBooks) => {
+        if(searchBooks.error !== 'empty query') {
+          searchBooks.map((searchBook) => {
+            return searchBook.shelf = this.getBookLocation(searchBook)
+          })
+
+          this.setState({ books: searchBooks })
         }
       })
+    }
+  }
+
+  getBookLocation = (searchBook) => {
+    if(this.props.myBooksIds.indexOf(searchBook.id) > -1) {
+      let foundBook = this.props.myBooks.filter((myBook) => myBook.id === searchBook.id)
+
+      return foundBook[0].shelf
+    } else {
+      return 'none'
     }
   }
 
   render() {
     return (
       <div className="search-books">
-        {console.log(this.state.books)}
         <div className="search-books-bar">
           <Link
             className="close-search"
@@ -47,12 +60,9 @@ class SearchBooks extends React.Component {
           <ol className="books-grid">
             {this.state.books.length > 0 && this.state.books.map((book) => (
               <li key={book.id}>
-                {console.log(this.props.myBooks.indexOf(book.id) > -1)}
-                {console.log(book.shelf)}
                 <Book
                   book={book}
                   onUpdateBookLocation={this.props.onUpdateBookLocation}
-                  selectedShelf={this.props.myBooks.indexOf(book.id) > -1 ? book.shelf : 'none'}
                 />
               </li>
             ))}

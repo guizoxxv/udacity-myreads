@@ -2,12 +2,14 @@ import React, { Component } from 'react'
 
 class Book extends Component {
   state = {
-    shelf: this.props.book.shelf
+    shelf: ''
   }
 
   selectChange = (e) => {
     let selectValue = e.target.value
     this.props.onUpdateBookLocation(this.props.book, selectValue)
+
+    this.setState({ books: selectValue })
   }
 
   render() {
@@ -16,7 +18,7 @@ class Book extends Component {
         <div className="book-top">
           <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${this.props.book.imageLinks.thumbnail})` }}></div>
           <div className="book-shelf-changer">
-            <select value={this.state.shelf} onChange={(e) => this.selectChange(e)}>
+            <select value={this.props.book.shelf} onChange={(e) => this.selectChange(e)}>
               <option value="none" disabled>Move to...</option>
               <option value="currentlyReading">Currently Reading</option>
               <option value="wantToRead">Want to Read</option>
