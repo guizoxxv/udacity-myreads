@@ -1,10 +1,6 @@
 import React, { Component } from 'react'
 
 class Book extends Component {
-  state = {
-    shelf: ''
-  }
-
   selectChange = (e) => {
     let selectValue = e.target.value
     this.props.onUpdateBookLocation(this.props.book, selectValue)
