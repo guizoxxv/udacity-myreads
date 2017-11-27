@@ -3,7 +3,7 @@ import * as BooksAPI from './BooksAPI'
 import './App.css'
 import { Link } from 'react-router-dom'
 import Book from './Book'
-// import { Debounce } from 'react-throttle'
+import { Debounce } from 'react-throttle'
 
 class SearchBooks extends React.Component {
   state = {
@@ -51,14 +51,14 @@ class SearchBooks extends React.Component {
             Close
           </Link>
           <div className="search-books-input-wrapper">
-            {/*<Debounce time="400" handler="onChange">*/}
+            <Debounce time="400" handler="onChange">
               <input
                 type="text"
                 placeholder="Search by title or author"
-                value={this.state.query}
+                // value={this.state.query} Não funciona com o debounce
                 onChange={(e) => this.updateQuery(e.target.value)}
               />
-            {/*</Debounce>*/}
+            </Debounce>
           </div>
         </div>
         <div className="search-books-results">

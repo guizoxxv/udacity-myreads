@@ -4,8 +4,6 @@ class Book extends Component {
   selectChange = (e) => {
     let selectValue = e.target.value
     this.props.onUpdateBookLocation(this.props.book, selectValue)
-
-    this.setState({ books: selectValue })
   }
 
   render() {
