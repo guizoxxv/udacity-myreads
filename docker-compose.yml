@@ -1,12 +1,20 @@
 version: "3"
 services:
-  myreads-app:
-    container_name: myreads-app
-    image: node:9.0.0
+# development: dev; production: app + server
+  dev:
+    image: node:8
     volumes:
-      - ./react-app:/home/react/app
-    working_dir: /home/react/app
+      - ./:/usr/src/app
+    working_dir: /usr/src/app
     ports:
-      - 3003:3000
+      - 3000:3000
+      - 3001:3001
     tty: true
-    command: npm start
+  # app:
+  #   image: guizo/docker-nginx
+  #   volumes:
+  #     - ./build:/usr/share/nginx/html
+  #   working_dir: /usr/share/nginx/html
+  #   ports:
+  #     - 3000:80
+  #   tty: true
